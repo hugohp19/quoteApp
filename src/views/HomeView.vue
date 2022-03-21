@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <!-- <p>this is my first quote</p> -->
+    <!-- This view will display a random quote, as well as the author and two action buttons (a like/unlike button and a delete button) -->
     <div class="quoteContainer">
       <div class="quoteDiv">
         <q>{{ randomQuote.data.quote }}</q>
@@ -20,16 +20,16 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from "@/components/HelloWorld.vue";
+import swal from "sweetalert";
 
 export default {
   name: "HomeView",
   props: ["randomQuote"],
+  // in watch: we are going to keep track of the randomQuote object to check when it has a change.
+  // more specifically in the liked field.
+  // this is to toggle the heart between white to red
   watch: {
-    randomQuote: function (newVal, oldVal) {
-      console.log("Prop  was: ", oldVal.data.liked);
-      console.log("Prop changed: ", newVal.data.liked);
+    randomQuote: function (newVal) {
       if (newVal.data.liked) {
         this.currentImage = this.heartFilled;
       } else {
@@ -40,15 +40,13 @@ export default {
   data() {
     return {
       heartEmpty: require("@/assets/icons/heartWhite.svg"),
-      heartFilled: require("@/assets/icons/iconmonstr-favorite-3-240.png"),
+      heartFilled: require("@/assets/icons/heartRed.png"),
       removeIcon: require("@/assets/icons/removeIcon.png"),
       currentImage: null,
     };
   },
-  // components: {
-  //   HelloWorld,
-  // },
   mounted() {
+    //this will do the same thing that watch (line 31) is doing but only the first time when it is mounted
     if (this.randomQuote.data.liked) {
       this.currentImage = this.heartFilled;
     } else {
@@ -56,22 +54,21 @@ export default {
     }
   },
   methods: {
+    //this method calls the setRandomQuote from the parent (App.vue)
     getNextQuote() {
       this.$parent.$parent.setRandomQuote();
     },
+    //this method calls the setLikedQuote from the parent (App.vue)
     likeQuote() {
       this.$parent.$parent.setLikedQuote(this.randomQuote.index);
     },
-    isQuoteLiked() {
-      if (this.randomQuote.data.liked) {
-        this.currentImage = this.heartFilled;
-      } else {
-        this.currentImage = this.heartEmpty;
-      }
-    },
+    //this method calls the deleteQuote from the parent (App.vue)
     deleteRandomQuote(quote) {
-      console.log(quote);
-      this.$parent.$parent.deleteQuote(quote);
+      swal("Are you sure you delete this quote?", {
+        buttons: true,
+      }).then((willDelete) => {
+        if (willDelete) this.$parent.$parent.deleteQuote(quote);
+      });
     },
   },
 };

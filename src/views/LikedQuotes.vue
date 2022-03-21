@@ -1,6 +1,7 @@
 <template>
+  <!-- This view will display a table with all the quotes that a user has liked -->
   <div class="likeQuotesContainer">
-    <table>
+    <table v-if="displayTable">
       <tr>
         <th>Quote</th>
         <th>Author</th>
@@ -14,6 +15,7 @@
         </td>
       </tr>
     </table>
+    <p v-else>Please like any of our quotes, then come back to see you list</p>
   </div>
 </template>
 
@@ -24,12 +26,26 @@ export default {
   data() {
     return {
       removeIcon: require("@/assets/icons/removeIcon.png"),
+      displayTable: this.likedQuotes.data.length > 0 ? true : false,
     };
   },
+  // in watch: we are going to keep track of the likedQuotes object to check when it has a change,
+  // and update the list accordingly
+  watch: {
+    likedQuotes: function (newVal) {
+      if (newVal.data.length > 0) {
+        this.displayTable = true;
+      } else {
+        this.displayTable = false;
+      }
+    },
+  },
   methods: {
+    //this method calls the getLikedQuotes from the parent (App.vue)
     getUserLikedQuotes() {
       this.$parent.$parent.getLikedQuotes();
     },
+    //this method calls the setUnlikeQuote from the parent (App.vue)
     unlikeQuote(quote) {
       this.$parent.$parent.setUnlikeQuote(quote);
     },
@@ -49,10 +65,11 @@ th,
 td {
   border: 1px solid white;
   border-collapse: collapse;
+  color: #fff;
 }
 th,
 td {
-  background-color: #96d4d4;
+  background-color: #e24e42;
   padding: 5px 20px;
 }
 .center {

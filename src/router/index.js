@@ -1,13 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LikedQuotes from "../views/LikedQuotes.vue";
-import TestView from "../views/TestView.vue";
+import HomeView from "../views/HomeView.vue";
 import AddQuote from "../views/AddQuote.vue";
 
+/*
+  using routes to navigate through all the endpoints
+  will redirect to HomeView if a routes does not exist
+*/
 const routes = [
   {
     path: "/",
-    name: "test",
-    component: TestView,
+    name: "home",
+    component: HomeView,
   },
   {
     path: "/likedquotes",
@@ -18,6 +22,10 @@ const routes = [
     path: "/addquote",
     name: "addquote",
     component: AddQuote,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: HomeView,
   },
 ];
 

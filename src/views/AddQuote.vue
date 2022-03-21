@@ -1,4 +1,5 @@
 <template>
+  <!-- This view will have the inputs to add a quote to the array -->
   <div class="addQuoteContainer">
     <div class="inputContainer">
       <label for="quoteInput">New Quote</label>
@@ -24,6 +25,11 @@ export default {
     };
   },
   methods: {
+    /* 
+      this method will check that the data needed from the input is not empty,
+      as well as adding the necessary information such as id and liked.
+      then it will call the addQuoteToArray method from the parent component
+    */
     addQuote() {
       if (!this.quote || !this.author) {
         swal(
