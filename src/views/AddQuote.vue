@@ -14,6 +14,7 @@
 
 <script>
 import { uid } from "uid";
+import swal from "sweetalert";
 export default {
   name: "AddQuoteView",
   data() {
@@ -22,31 +23,29 @@ export default {
       author: null,
     };
   },
-  // mounted() {
-  //   if (this.randomQuote.data.liked) {
-  //     this.currentImage = this.heartFilled;
-  //   } else {
-  //     this.currentImage = this.heartEmpty;
-  //   }
-  // },
   methods: {
     addQuote() {
-      if (!this.quote || !this.author) return;
-      console.log(this.quote.length);
-      console.log(this.author);
+      if (!this.quote || !this.author) {
+        swal(
+          "Sorry",
+          "You need to add a quote and an author to proceed",
+          "warning"
+        );
+        return;
+      }
       const quoteData = {
         id: uid(),
         quote: this.quote.trim(),
         author: this.author.trim(),
         liked: false,
       };
-      console.log(quoteData);
       if (quoteData.quote.length < 1 || quoteData.author.length < 1) return;
       try {
         this.$parent.$parent.addQuoteToArray(quoteData);
       } catch (error) {
         console.log(error);
       }
+      swal("All Right!", "Your quote has been added", "success");
       this.quote = "";
       this.author = "";
     },

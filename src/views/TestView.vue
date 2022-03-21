@@ -60,7 +60,6 @@ export default {
       this.$parent.$parent.setRandomQuote();
     },
     likeQuote() {
-      console.log(this.randomQuote.index);
       this.$parent.$parent.setLikedQuote(this.randomQuote.index);
     },
     isQuoteLiked() {

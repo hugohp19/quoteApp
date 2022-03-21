@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <router-link to="/">Random <spam>Quote</spam></router-link> |
-    <router-link to="/likedquotes">Liked <spam>Quote</spam></router-link> |
-    <router-link to="/addquote">Add <spam>Quote</spam></router-link>
+    <router-link to="/">Random <span>Quote</span></router-link> |
+    <router-link to="/likedquotes">Liked <span>Quote</span></router-link> |
+    <router-link to="/addquote">Add <span>Quote</span></router-link>
   </nav>
   <router-view :randomQuote="randomQuote" :likedQuotes="likedQuotes" />
 </template>
@@ -10,6 +10,7 @@
 <script>
 import { quotes } from "@/data/quotes";
 import { getRandomQuote } from "@/functions/quotesFunctions";
+import swal from "sweetalert";
 
 export default {
   name: "app",
@@ -61,6 +62,7 @@ export default {
       this.currentQuotes[quoteIndex].liked = false;
       localStorage.setItem("quotes", JSON.stringify(this.currentQuotes));
       this.getLikedQuotes();
+      swal("Success", "Your quote has been remove from this list", "success");
     },
 
     getLikedQuotes() {
@@ -77,7 +79,7 @@ export default {
       this.currentQuotes.splice(quoteData.index, 1);
       console.log(this.currentQuotes);
       this.setRandomQuote();
-      console.log(quoteData.data.liked);
+      swal("Success", "Your quote has been delete", "success");
     },
     addQuoteToArray(newQuote) {
       this.currentQuotes.push(newQuote);
@@ -125,7 +127,7 @@ nav a.router-link-exact-active {
   #app {
     padding: 20px;
   }
-  spam {
+  span {
     display: none;
   }
 }
