@@ -1,26 +1,31 @@
 import { createRouter, createWebHistory } from "vue-router";
+import LikedQuotes from "../views/LikedQuotes.vue";
 import HomeView from "../views/HomeView.vue";
-import TestView from "../views/TestView.vue";
+import AddQuote from "../views/AddQuote.vue";
 
+/*
+  using routes to navigate through all the endpoints
+  will redirect to HomeView if a routes does not exist
+*/
 const routes = [
   {
     path: "/",
-    name: "test",
-    component: TestView,
-  },
-  {
-    path: "/home",
     name: "home",
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/likedquotes",
+    name: "LikedQuotes",
+    component: LikedQuotes,
+  },
+  {
+    path: "/addquote",
+    name: "addquote",
+    component: AddQuote,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: HomeView,
   },
 ];
 
