@@ -2,7 +2,7 @@
   <div class="addQuoteContainer">
     <div class="inputContainer">
       <label for="quoteInput">New Quote</label>
-      <input type="text" id="quoteInput" name="quote" v-model="message" />
+      <input type="text" id="quoteInput" name="quote" v-model="quote" />
       <label for="authorInput">Author</label>
       <input type="text" id="authorInput" name="author" v-model="author" />
       <div class="buttonContainer">
@@ -13,11 +13,12 @@
 </template>
 
 <script>
+import { uid } from "uid";
 export default {
   name: "AddQuoteView",
   data() {
     return {
-      message: null,
+      quote: null,
       author: null,
     };
   },
@@ -30,17 +31,24 @@ export default {
   // },
   methods: {
     addQuote() {
-      if (!this.message || !this.author) return;
-      console.log(this.message.length);
+      if (!this.quote || !this.author) return;
+      console.log(this.quote.length);
       console.log(this.author);
       const quoteData = {
-        quote: this.message.trim(),
+        id: uid(),
+        quote: this.quote.trim(),
         author: this.author.trim(),
         liked: false,
       };
       console.log(quoteData);
       if (quoteData.quote.length < 1 || quoteData.author.length < 1) return;
-      this.$parent.$parent.addQuoteToArray(quoteData);
+      try {
+        this.$parent.$parent.addQuoteToArray(quoteData);
+      } catch (error) {
+        console.log(error);
+      }
+      this.quote = "";
+      this.author = "";
     },
   },
 };
@@ -101,8 +109,9 @@ button:active {
 }
 
 @media only screen and (max-width: 600px) {
-  .quoteContainer {
-    flex-direction: column;
+  .inputContainer {
+    width: 100%;
+    padding: 10px;
   }
 }
 </style>

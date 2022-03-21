@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <router-link to="/">Random Quote</router-link> |
-    <router-link to="/likedquotes">Liked Quotes</router-link> |
-    <router-link to="/addquote">Add Quotes</router-link>
+    <router-link to="/">Random <spam>Quote</spam></router-link> |
+    <router-link to="/likedquotes">Liked <spam>Quote</spam></router-link> |
+    <router-link to="/addquote">Add <spam>Quote</spam></router-link>
   </nav>
   <router-view :randomQuote="randomQuote" :likedQuotes="likedQuotes" />
 </template>
@@ -80,9 +80,7 @@ export default {
       console.log(quoteData.data.liked);
     },
     addQuoteToArray(newQuote) {
-      console.log(newQuote);
       this.currentQuotes.push(newQuote);
-      console.log(this.currentQuotes);
     },
   },
 };
@@ -121,5 +119,14 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+@media only screen and (max-width: 600px) {
+  #app {
+    padding: 20px;
+  }
+  spam {
+    display: none;
+  }
 }
 </style>

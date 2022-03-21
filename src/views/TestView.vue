@@ -28,7 +28,6 @@ export default {
   props: ["randomQuote"],
   watch: {
     randomQuote: function (newVal, oldVal) {
-      // watch it
       console.log("Prop  was: ", oldVal.data.liked);
       console.log("Prop changed: ", newVal.data.liked);
       if (newVal.data.liked) {
@@ -82,14 +81,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .home {
-  /* background-color: lightblue; */
   height: 95%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background-color: coral; */
-  /* box-sizing: border-box; */
 }
 
 p,
@@ -153,6 +149,7 @@ button:active {
 @media only screen and (max-width: 600px) {
   .quoteContainer {
     flex-direction: column;
+    padding: 1rem;
   }
 }
 </style>
